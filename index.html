@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teka-Teki Rifki</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-image: url("img/desktop-wallpaper-minimalist-aesthetic-laptop.jpeg");
+      background-size:cover ;
+}
+    
+
+    h1, h2 {
+      color: #ece7dd;
+    }
+
+    p {
+      color: #171714;
+    }
+
+    #questionDisplay, #answerInput {
+      font-size: 18px;
+      margin: 20px 0;
+      color: #b99c39;
+    }
+
+    #answerInput {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      background-color: #9c8943;
+      color: #0a0909;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #bdbd28;
+    }
+
+    #result, #scoreDisplay {
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .fadeIn {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .slideIn {
+      animation: slideIn 1s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+  <h1 class="fadeIn">Teka_Teki by@NRifki</h1>
+  <div id="questionDisplay" class="fadeIn slideIn"></div>
+  <p id="result" class="fadeIn slideIn"></p>
+  <input type="text" id="answerInput" class="fadeIn slideIn">
+  <button onclick="checkAnswer()" class="fadeIn slideIn">Jawab</button>
+  <button onclick="resetGame()" class="fadeIn slideIn">Ulangi</button>
+  <p id="scoreDisplay" class="fadeIn"></p>
+
+  <script>
+    const questions = [
+      { question: ' Kalau ada angsa lima, dikali dua. Berapa total semua angsa?', answer: 'tetap 5, karena yang di kali ada 2, yang di darat ada 3.' },
+      { question: 'Kalau ada bus kecelakaan, pesawat jatuh, ada kapal tenggelam, semuanya akan munculdi mana?', answer: 'di tv' },
+      { question: 'Ada 5 orang yang berjalan dibawah 1 payung kecil tapi anehnya tidak seorang pun yang kehujanan, kenapa?', answer: 'karena tidak hujan' },
+      { question: ' Seorang pria terjebak di dalam gua, ia kebingungan karena gua tersebut gelap. Di tangannya ada lilin dan obor. Apa yang harus ia nyalakan terlebih dahulu?', answer: 'korek api.' },
+      { question: ' Kalau sedang sendiri, kakinya ada empat, kalau berdua, kakinya jadi ada delapan. Siapakah aku?', answer: 'kursi' },
+      { question: ' Kenapa anak kucing dan anak anjing suka berantem??', answer: 'Ya namanya juga anak-anak.' },
+      { question: ' Jika ada 1 kilo batu dan ada 1 kilo kapas, ketika dijatuhkan ke atas kaki, apa yang lebih sakit?', answer: 'kaki kita' },
+      { question: ' Aku selalu ada di atas presiden dan menteri, tapi aku tidak punya jabatan apapun dalam pemerintahan. Siapakah aku?', answer: 'peci' },
+      // Tambahkan lebih banyak soal sesuai keinginan Anda
+    ];
+
+    let currentQuestionIndex = 0;
+    let currentQuestion = questions[currentQuestionIndex];
+    let correctAnswers = 0;
+
+    function displayQuestion() {
+      document.getElementById('questionDisplay').innerHTML = currentQuestion.question;
+    }
+
+    function checkAnswer() {
+      const userAnswer = document.getElementById('answerInput').value.toLowerCase();
+
+      if (userAnswer === currentQuestion.answer) {
+        document.getElementById('result').innerHTML = 'Jawaban benar!';
+        document.getElementById('result').style.color = 'yellow';
+        correctAnswers++;
+      } else {
+        document.getElementById('result').innerHTML = 'Jawaban salah. Coba lagi.';
+        document.getElementById('result').style.color = 'orange';
+      }
+
+      // Menampilkan jawaban yang benar
+      document.getElementById('result').innerHTML += ` Jawaban yang benar: ${currentQuestion.answer}`;
+
+      // Pindah ke soal berikutnya atau akhiri permainan
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        currentQuestion = questions[currentQuestionIndex];
+        displayQuestion();
+      } else {
+        document.getElementById('questionDisplay').innerHTML = 'Permainan selesai!';
+        document.getElementById('answerInput').style.display = 'none';
+        document.getElementById('result').innerHTML = '';
+        displayScore();
+      }
+
+      // Mengosongkan input jawaban
+      document.getElementById('answerInput').value = '';
+    }
+
+    function resetGame() {
+      currentQuestionIndex = 0;
+      currentQuestion = questions[currentQuestionIndex];
+      correctAnswers = 0;
+      displayQuestion();
+      document.getElementById('answerInput').style.display = 'inline';
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('answerInput').value = '';
+      document.getElementById('scoreDisplay').innerHTML = '';
+    }
+
+    function displayScore() {
+      document.getElementById('scoreDisplay').innerHTML = `Skor Anda: ${correctAnswers} dari ${questions.length}`;
+    }
+
+    // Memulai permainan pertama kali
+    displayQuestion();
+  </script>
+
+</body>
+</html>
